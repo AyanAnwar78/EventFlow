@@ -1,0 +1,13 @@
+{
+  "name": "event-management-system",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev:backend": "nodemon backend/server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
