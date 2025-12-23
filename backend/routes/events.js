@@ -51,9 +51,16 @@ router.post('/', isAuthenticated, async (req, res) => {
     }
 
     try {
-        const { name, date, location, description, owner_id } = req.body;
-        // Admin creates, assigns owner_id (User) as organizer. Returns User context.
-        const organizerId = owner_id || req.session.userId;
+        const { name, date, location, description, owner_id, owner_email } = req.body;
+
+        let organizerId = owner_id || req.session.userId;
+
+        if (owner_email) {
+            const User = require('../models/User');
+            const owner = await User.findOne({ email: owner_email });
+            if (owner) organizerId = owner._id;
+            else return res.status(404).json({ error: 'Organizer email not found' });
+        }
 
         const event = new Event({
             name, date, location, description,

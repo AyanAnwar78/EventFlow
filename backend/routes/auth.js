@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
 
         req.session.userId = user._id;
         req.session.role = user.role;
-        res.status(201).json({ message: 'Registered successfully', user: { id: user._id, name: user.name, role: user.role } });
+        res.status(201).json({ message: 'Registered successfully', user: { id: user._id, name: user.name, email: user.email, role: user.role } });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 
         req.session.userId = user._id;
         req.session.role = user.role;
-        res.json({ message: 'Logged in', user: { id: user._id, name: user.name, role: user.role } });
+        res.json({ message: 'Logged in', user: { id: user._id, name: user.name, email: user.email, role: user.role } });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

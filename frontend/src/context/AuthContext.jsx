@@ -10,9 +10,11 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
     const checkAuth = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/me', {
+            const res = await fetch(`${BACKEND_URL}/api/me`, {
                 credentials: 'include' // Send cookies
             });
             if (res.ok) {
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await fetch('http://localhost:5000/api/logout', { method: 'POST', credentials: 'include' });
+            await fetch(`${BACKEND_URL}/api/logout`, { method: 'POST', credentials: 'include' });
             setUser(null);
         } catch (err) {
             console.error(err);

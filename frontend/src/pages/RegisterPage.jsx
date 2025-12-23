@@ -18,11 +18,13 @@ const RegisterPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         try {
-            const res = await fetch('http://localhost:5000/api/register', {
+            const res = await fetch(`${BACKEND_URL}/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -40,20 +42,27 @@ const RegisterPage = () => {
     };
 
     return (
-        <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            padding: '2rem'
-        }}>
-            <div className="glass-panel" style={{ padding: '2rem', width: '100%', maxWidth: '400px' }}>
-                <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Create Account</h2>
-                {error && <div style={{ color: '#ff6b6b', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+        <div className="flex justify-center items-center min-h-screen p-8 bg-[#FFF5F5]">
+            <div className="bg-white/90 backdrop-blur-xl border border-pink-100 p-10 rounded-3xl w-full max-w-sm shadow-xl relative overflow-hidden">
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-pink-100/50 blur-3xl -z-10 rounded-full" />
 
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div className="input-group">
-                        <User size={20} color="var(--text-secondary)" />
+                <div className="flex justify-center mb-6">
+                    <div className="w-16 h-16 bg-pink-600 rounded-2xl flex items-center justify-center font-bold text-3xl shadow-lg shadow-pink-600/20 text-white">E</div>
+                </div>
+                <h2 className="text-3xl font-black text-center mb-2 tracking-tight text-black">Create <span className="text-pink-600">Account</span></h2>
+                <p className="text-black text-center mb-8 text-sm font-bold italic opacity-80">Join EventFlow today</p>
+
+                {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-xl mb-6 text-sm text-center font-bold animate-shake">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="relative group">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-pink-600 transition-colors">
+                            <User size={18} />
+                        </div>
                         <input
                             type="text"
                             name="name"
@@ -61,11 +70,14 @@ const RegisterPage = () => {
                             value={formData.name}
                             onChange={handleChange}
                             required
+                            className="w-full bg-white border border-pink-100 pl-11 pr-4 py-3.5 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/5 transition-all placeholder:text-gray-400 text-sm font-bold text-black shadow-sm"
                         />
                     </div>
 
-                    <div className="input-group">
-                        <Mail size={20} color="var(--text-secondary)" />
+                    <div className="relative group">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-pink-600 transition-colors">
+                            <Mail size={18} />
+                        </div>
                         <input
                             type="email"
                             name="email"
@@ -73,11 +85,14 @@ const RegisterPage = () => {
                             value={formData.email}
                             onChange={handleChange}
                             required
+                            className="w-full bg-white border border-pink-100 pl-11 pr-4 py-3.5 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/5 transition-all placeholder:text-gray-400 text-sm font-bold text-black shadow-sm"
                         />
                     </div>
 
-                    <div className="input-group">
-                        <Lock size={20} color="var(--text-secondary)" />
+                    <div className="relative group">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-pink-600 transition-colors">
+                            <Lock size={18} />
+                        </div>
                         <input
                             type="password"
                             name="password"
@@ -85,19 +100,18 @@ const RegisterPage = () => {
                             value={formData.password}
                             onChange={handleChange}
                             required
+                            className="w-full bg-white border border-pink-100 pl-11 pr-4 py-3.5 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-500/5 transition-all placeholder:text-gray-400 text-sm font-bold text-black shadow-sm"
                         />
                     </div>
 
-
-
-                    <button type="submit" className="btn btn-primary" style={{ marginTop: '1rem', width: '100%' }}>
-                        Register
+                    <button type="submit" className="w-full bg-pink-600 hover:bg-pink-700 text-black font-black py-4 rounded-xl shadow-lg shadow-pink-600/20 transform active:scale-[0.98] transition-all mt-4 uppercase tracking-widest text-xs">
+                        Sign Up
                     </button>
                 </form>
 
-                <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    Already have an account? <Link to="/login" style={{ color: 'var(--accent)' }}>Login</Link>
-                </div>
+                <p className="mt-8 text-center text-sm text-gray-600 font-bold">
+                    Already have an account? <Link to="/login" className="text-pink-600 font-black hover:underline transition-all hover:text-pink-700">Go to Login</Link>
+                </p>
             </div>
         </div>
     );

@@ -36,7 +36,7 @@ connectDB().then(async () => {
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
     credentials: true // Important for sessions
 }));
 app.use(express.json());
@@ -60,13 +60,10 @@ app.use('/api/admin', require('./routes/admin'));
 app.use('/api/events', require('./routes/events'));
 app.use('/api/requests', require('./routes/requests'));
 app.use('/api/guests', require('./routes/guests'));
-// Bookings & Schedules (Keeping brief for now or moving if needed, but for simplicity let's quick-add inline or basic file if requested features need them heavily. 
-// User mentioned "View all RSVPs" (Guests), "Manage users", "Create events". 
-// I'll leave bookings as specific to the user flow, but maybe move them to a generic file if time permits.
-// For now, to keep server.js clean, I'll assume bookings are less critical to the "Admin vs User" refactor unless explicitly asked, but used in Dashboard.
-// I'll add a bookings route file for consistency.)
-app.use('/api/bookings', require('./routes/bookings'));
-app.use('/api/schedules', require('./routes/schedules'));
+app.use('/api/feedback', require('./routes/feedback'));
+// Bookings & Schedules removed as requested in previous flow refinements
+// app.use('/api/bookings', require('./routes/bookings'));
+// app.use('/api/schedules', require('./routes/schedules'));
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
